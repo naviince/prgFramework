@@ -110,8 +110,8 @@
 
     <!-- Script JavaScript untuk Read dan Tampilan Form -->
     <script>
-        // 1. Mengambil Data dari API (READ)
-        const url = 'https://api.roniprsty.com/produk/read.php';
+// 1. Mengambil Data dari API (READ)
+        const url = 'http://api.melangkah.my.id/produk/';
 
         async function getProducts() {
             try {
@@ -167,7 +167,7 @@
             };
 
             try {
-                let response = await fetch('https://api.roniprsty.com/produk/create.php', {
+                let response = await fetch('http://api.melangkah.my.id/produk/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
