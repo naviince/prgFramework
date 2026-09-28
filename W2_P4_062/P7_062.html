@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,27 +12,31 @@
     <style>
         body {
             background-color: #f8f9fa;
-            font-family: Tahoma, sans-serif;
+            font-family: 'Tahoma', sans-serif;
             padding: 20px;
         }
+
         .container {
             margin-top: 30px;
         }
+
         .table-container {
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             background-color: white;
             padding: 20px;
         }
+
         h1 {
             text-align: center;
             margin-bottom: 30px;
         }
-        table thead th {
+
+        .table thead th {
             background-color: #343a40;
             color: white;
         }
-        /* CSS untuk formulir penambahan data */
+
         .form-container {
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
@@ -42,9 +47,10 @@
         }
     </style>
 </head>
+
 <body>
+
     <div class="container">
-        <!-- Bagian Tabel Produk -->
         <div class="table-container">
             <h1>Daftar Produk - P7_062</h1>
             <button id="addDataBtn" class="btn btn-primary mb-3">+ Add Data</button>
@@ -58,17 +64,18 @@
                         <th>Harga Beli</th>
                         <th>Harga Jual</th>
                         <th>Status</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="7" class="text-center">Data produk akan muncul di sini...</td>
+                        <td colspan="8" class="text-center">Data produk akan muncul di sini...</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Bagian Formulir Tambah Data -->
+        <!-- Form Tambah / Ubah Data -->
         <div class="form-container" id="formContainer">
             <h3 id="formTitle">Tambah Produk Baru</h3>
             <form id="addProductForm">
@@ -108,85 +115,181 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script JavaScript untuk Read dan Tampilan Form -->
     <script>
-// 1. Mengambil Data dari API (READ)
-        const url = 'http://api.melangkah.my.id/produk/';
+        const url = 'http://api.melangkah.my.id/produk/read.php';
+        const createUrl = 'http://api.melangkah.my.id/produk/create.php';
+        const updateUrl = 'http://api.melangkah.my.id/produk/update.php';
+        const deleteUrl = 'http://api.melangkah.my.id/produk/delete.php';
 
+        // ===== READ =====
         async function getProducts() {
             try {
                 let response = await fetch(url);
+
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 let products = await response.json();
-                
+
                 let tableBody = document.querySelector('#product-table tbody');
                 tableBody.innerHTML = ''; // Kosongkan isi tabel
-                
+
                 products.forEach(product => {
-                    let row = `<tr>
-                        <td>${product.id}</td>
-                        <td>${product.nama_produk}</td>
-                        <td>${product.jenis_produk}</td>
-                        <td>${product.stok}</td>
-                        <td>Rp${product.harga_beli}</td>
-                        <td>Rp${product.harga_jual}</td>
-                        <td>${product.status}</td>
-                    </tr>`;
+                    let row = `
+                        <tr>
+                            <td>${product.id}</td>
+                            <td>${product.nama_produk}</td>
+                            <td>${product.jenis_produk}</td>
+                            <td>${product.stok}</td>
+                            <td>Rp${product.harga_beli}</td>
+                            <td>Rp${product.harga_jual}</td>
+                            <td>${product.status}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">Delete</button>
+                            </td>
+                        </tr>`;
                     tableBody.innerHTML += row;
                 });
             } catch (error) {
-                console.error("Gagal mengambil data produk", error);
-                document.querySelector('#product-table tbody').innerHTML = `<tr><td colspan="7" class="text-center">Tidak dapat mengambil data produk.</td></tr>`;
+                console.error("Gagal mengambil data produk:", error);
+                document.querySelector('#product-table tbody').innerHTML = '<tr><td colspan="8" class="text-center">Tidak dapat mengambil data produk.</td></tr>';
             }
         }
 
-        // Panggil fungsi getProducts saat halaman dimuat
-        getProducts();
-
-        // 2. Menampilkan form untuk menambahkan produk baru (Event Listener Add Data)
+        // ===== Tampilkan form untuk menambahkan produk baru =====
         document.getElementById('addDataBtn').addEventListener('click', function () {
+            // Reset judul form dan tombol submit ketika menambahkan produk baru
+            document.getElementById('formTitle').textContent = 'Tambah Produk Baru';
+            document.getElementById('submitBtn').textContent = 'Submit';
+            document.getElementById('addProductForm').reset(); // Reset form
+            delete document.getElementById('addProductForm').dataset.id; // Hapus ID sisa mode edit
             document.getElementById('formContainer').style.display = 'block';
         });
 
-        // 3. Menyembunyikan form saat tombol Cancel diklik
+        // ===== Sembunyikan form saat tombol Cancel diklik =====
         document.getElementById('cancelBtn').addEventListener('click', function () {
             document.getElementById('formContainer').style.display = 'none';
         });
 
-        // (Opsional/Lanjutan dari Modul) Script untuk submit formulir penambahan data
-        document.getElementById('addProductForm').addEventListener('submit', async function(e) {
+        // ===== CREATE & UPDATE: proses form untuk menambahkan atau memperbarui produk =====
+        document.getElementById('addProductForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            
-            const newData = {
-                nama_produk: document.getElementById('namaProduk').value,
-                jenis_produk: document.getElementById('jenisProduk').value,
-                stok: document.getElementById('stokProduk').value,
-                harga_beli: document.getElementById('hargaBeli').value,
-                harga_jual: document.getElementById('hargaJual').value,
-                status: document.getElementById('statusProduk').value
+
+            // Ambil nilai dari form
+            const id = this.dataset.id; // Ambil ID jika ada
+            const namaProduk = document.getElementById('namaProduk').value;
+            const jenisProduk = document.getElementById('jenisProduk').value;
+            const stokProduk = document.getElementById('stokProduk').value;
+            const hargaBeli = document.getElementById('hargaBeli').value;
+            const hargaJual = document.getElementById('hargaJual').value;
+            const statusProduk = document.getElementById('statusProduk').value;
+
+            const productData = {
+                "nama_produk": namaProduk,
+                "jenis_produk": jenisProduk,
+                "stok": stokProduk,
+                "harga_beli": hargaBeli,
+                "harga_jual": hargaJual,
+                "status": statusProduk
             };
 
             try {
-                let response = await fetch('http://api.melangkah.my.id/produk/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(newData)
-                });
+                if (id) {
+                    // Update produk yang ada
+                    productData.id = id; // Tambahkan ID produk
+                    let response = await fetch(updateUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(productData)
+                    });
 
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                
-                // Refresh data tabel dan sembunyikan form jika berhasil
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    alert('Produk berhasil diperbarui!');
+                } else {
+                    // Tambah produk baru
+                    let response = await fetch(createUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(productData)
+                    });
+
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    alert('Produk berhasil ditambahkan!');
+                }
+
+                // Perbarui tabel produk setelah menambah atau memperbarui
                 getProducts();
-                document.getElementById('formContainer').style.display = 'none';
-                this.reset();
-                alert('Data produk berhasil ditambahkan!');
+                document.getElementById('formContainer').style.display = 'none'; // Sembunyikan form setelah submit
+
             } catch (error) {
-                console.error("Gagal menambahkan data", error);
-                alert('Gagal menambahkan produk!');
+                console.error("Gagal mengirim data produk:", error);
+                alert("Gagal mengirim data produk.");
             }
         });
+
+        // ===== Fungsi untuk mengedit produk =====
+        async function editProduct(id) {
+            try {
+                // Dapatkan data produk yang akan diedit menggunakan detailUrl
+                const detailUrl = `http://api.melangkah.my.id/produk//detail.php?id=${id}`;
+                let response = await fetch(detailUrl);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                let product = await response.json();
+
+                // Periksa apakah data produk diterima dengan benar
+                if (!product || !product.nama_produk) {
+                    throw new Error("Data produk tidak ditemukan atau struktur data salah");
+                }
+
+                // Isi form dengan data produk
+                document.getElementById('namaProduk').value = product.nama_produk;
+                document.getElementById('jenisProduk').value = product.jenis_produk;
+                document.getElementById('stokProduk').value = product.stok;
+                document.getElementById('hargaBeli').value = product.harga_beli;
+                document.getElementById('hargaJual').value = product.harga_jual;
+                document.getElementById('statusProduk').value = product.status;
+
+                // Ubah judul form dan tombol submit untuk mode edit
+                document.getElementById('formTitle').textContent = 'Update Data Produk';
+                document.getElementById('submitBtn').textContent = 'Update';
+
+                // Simpan ID produk ke dalam dataset form
+                document.getElementById('addProductForm').dataset.id = product.id;
+
+                // Tampilkan form
+                document.getElementById('formContainer').style.display = 'block';
+
+            } catch (error) {
+                console.error('Gagal mengambil data produk:', error);
+                alert('Terjadi kesalahan saat mengambil data produk, silakan coba lagi.');
+            }
+        }
+
+        // ===== DELETE: fungsi untuk menghapus produk =====
+        async function deleteProduct(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
+                try {
+                    let response = await fetch(`${deleteUrl}?id=${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    alert('Produk berhasil dihapus!');
+                    getProducts(); // Muat ulang data produk
+
+                } catch (error) {
+                    console.error('Gagal menghapus produk:', error);
+                    alert('Gagal menghapus produk.');
+                }
+            }
+        }
+
+        getProducts();
     </script>
 </body>
+
 </html>
