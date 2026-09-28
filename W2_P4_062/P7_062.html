@@ -116,10 +116,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        const url = 'http://api.melangkah.my.id/produk/read.php';
-        const createUrl = 'http://api.melangkah.my.id/produk/create.php';
-        const updateUrl = 'http://api.melangkah.my.id/produk/update.php';
-        const deleteUrl = 'http://api.melangkah.my.id/produk/delete.php';
+        const url = 'https://api.melangkah.my.id/produk/read.php';
+        const createUrl = 'https://api.melangkah.my.id/produk/create.php';
+        const updateUrl = 'https://api.melangkah.my.id/produk/update.php';
+        const deleteUrl = 'https://api.melangkah.my.id/produk/delete.php';
 
         // ===== READ =====
         async function getProducts() {
@@ -234,7 +234,7 @@
         async function editProduct(id) {
             try {
                 // Dapatkan data produk yang akan diedit menggunakan detailUrl
-                const detailUrl = `http://api.melangkah.my.id/produk//detail.php?id=${id}`;
+                const detailUrl = `https://api.melangkah.my.id/produk//detail.php?id=${id}`;
                 let response = await fetch(detailUrl);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
