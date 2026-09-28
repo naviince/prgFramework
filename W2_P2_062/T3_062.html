@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>T3_062</title>
+</head>
+<body>
+    <h1>Kalkulator Statistik - T3_062</h1>
+    
+    <label>Masukkan angka (pisahkan dengan koma):</label><br>
+    <input type="text" id="inputArray" placeholder="Contoh: 10, 20, 30, 40, 50" style="width: 250px;">
+    <button onclick="hitungStatistik()">Hitung</button>
+
+    <div id="result" style="margin-top: 20px;"></div>
+
+    <script>
+        // Fungsi inti untuk menghitung min, max, rata-rata
+        const kalkulasi = (arr) => {
+            const min = Math.min(...arr);
+            const max = Math.max(...arr);
+            const total = arr.reduce((acc, val) => acc + val, 0);
+            const rataRata = total / arr.length;
+
+            return { min, max, rataRata };
+        };
+
+        function hitungStatistik() {
+            const input = document.getElementById('inputArray').value;
+            // Mengubah input string menjadi array angka
+            const array = input.split(',').map(num => parseFloat(num.trim()));
+
+            // Validasi jika input bukan angka
+            if (array.some(isNaN) || input === "") {
+                alert("Masukkan angka yang valid!");
+                return;
+            }
+
+            const hasil = kalkulasi(array);
+
+            // Menampilkan hasil
+            document.getElementById('result').innerHTML = `
+                <ul>
+                    <li>Nilai Minimum: ${hasil.min}</li>
+                    <li>Nilai Maksimum: ${hasil.max}</li>
+                    <li>Nilai Rata-rata: ${hasil.rataRata}</li>
+                </ul>
+            `;
+        }
+    </script>
+</body>
+</html>

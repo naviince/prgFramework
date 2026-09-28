@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P1_062</title>
+    <style>
+        /* Menambahkan gaya CSS untuk memusatkan konten */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Kalkulator Sederhana</h1>
+       <!-- Button untuk memanggil fungsi mulaiKalkulator -->
+        <button onclick="mulaiKalkulator()">Mulai Kalkulator</button>
+        <h4>P1_062</h4>
+        <div id="hasil"></div>
+    </div>
+
+    <script>
+        function mulaiKalkulator() {
+            // Meminta iinput dalam fromat angka1+angka2 tanpa spasi
+            const input = prompt("Masukkan operasi (contoh: 2+3, 4-1, 5*2, 10/2):");
+            if (!input) {
+                alert("Operasi dibatalkan!");
+                return;
+            }
+
+            // Regex untuk memisahkan angka dan operasi 
+            const match = input.match(/^(\d+)([+\-*/])(\d+)$/);
+
+            if (!match) {
+                alert("Format input tidak valid! Gunakan format: angka1+angka2");
+                return;
+            }
+
+            // Menangkap angka pertama, operator, dan angka kedua
+            const angka1 = parseFloat(match[1]);
+            const operasi = match[2];
+            const angka2 = parseFloat(match[3]);
+            let hasil;
+
+            // Melakukan operasi berdarakan input
+            switch (operasi) {
+                case '+':
+                    hasil = angka1 + angka2;
+                    break;
+                case '-':
+                    hasil = angka1 - angka2;
+                    break;
+                case '*':
+                    hasil = angka1 * angka2;
+                    break;
+                case '/':
+                    if (angka2 === 0) {
+                        alert("Tidak bisa membagi dengan nol!");
+                        return;
+                    }
+                    hasil = angka1 / angka2;
+                    break;
+                    default:
+                    alert("Operasi tidak dikenali!");
+                    return;
+            }
+
+                    // Menampilkan hasil operasi menggunakan alert dan elemen HTML
+                    alert (`Hasil: ${hasil}`);
+        }
+    </script>
+</body>
+
+</html>

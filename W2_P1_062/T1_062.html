@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T1_062 - Konverter Suhu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; 
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin-bottom: 60px; 
+        }
+
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-top: 1px solid #ddd;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-top: 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #34495e;
+            margin-bottom: 25px;
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        label span {
+            color: red;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 8px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .btn-primary {
+            background-color: #4a59a8;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        #result-area {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: none; 
+        }
+
+        .result-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-display {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4a59a8;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Konversi Suhu</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>Input Konversi</h2>
+            
+            <div class="form-group">
+                <label>Nilai Suhu <span>*</span></label>
+                <input type="number" id="inputSuhu" placeholder="Masukkan Nilai Suhu">
+            </div>
+
+            <div class="form-group">
+                <label>Dari Satuan</label>
+                <select id="dariUnit">
+                    <option value="C">Celsius</option>
+                    <option value="F">Fahrenheit</option>
+                    <option value="R">Reamur</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Ke Satuan</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="keUnit" value="C"> Celsius</label>
+                    <label><input type="radio" name="keUnit" value="F" checked> Fahrenheit</label>
+                    <label><input type="radio" name="keUnit" value="R"> Reamur</label>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="resetForm()">Reset</button>
+                <button class="btn btn-primary" onclick="prosesKonversi()">Konversi</button>
+            </div>
+
+            <div id="result-area">
+                <div class="result-title">Hasil Konversi:</div>
+                <div class="result-display" id="hasilTeks">0</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="T1_062.js"></script>
+</body>
+</html>
