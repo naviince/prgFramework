@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Penghitung Klik</title>
+</head>
+<body>
+
+    <h2>Aplikasi Penghitung Jumlah Klik</h2>
+    
+    <!-- Tombol yang memanggil fungsi hitungKlik() saat diklik -->
+    <button onclick="hitungKlik()">Klik Saya!</button>
+    
+    <!-- Elemen untuk menampilkan jumlah klik -->
+    <p>Jumlah total klik: <span id="tampilJumlah">0</span></p>
+
+    <script>
+        // Variabel untuk menyimpan jumlah klik
+        let jumlah = 0;
+
+        function hitungKlik() {
+            // Menambah nilai variabel setiap kali tombol diklik
+            jumlah++;
+            // Memperbarui teks pada elemen span dengan ID 'tampilJumlah'
+            document.getElementById("tampilJumlah").innerText = jumlah;
+        }
+    </script>
+
+</body>
+</html>

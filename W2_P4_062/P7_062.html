@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Produk</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Tahoma, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .table-container {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: white;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table thead th {
+            background-color: #343a40;
+            color: white;
+        }
+        /* CSS untuk formulir penambahan data */
+        .form-container {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Bagian Tabel Produk -->
+        <div class="table-container">
+            <h1>Daftar Produk - P7_062</h1>
+            <button id="addDataBtn" class="btn btn-primary mb-3">+ Add Data</button>
+            <table id="product-table" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama Produk</th>
+                        <th>Jenis Produk</th>
+                        <th>Stok</th>
+                        <th>Harga Beli</th>
+                        <th>Harga Jual</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="7" class="text-center">Data produk akan muncul di sini...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bagian Formulir Tambah Data -->
+        <div class="form-container" id="formContainer">
+            <h3 id="formTitle">Tambah Produk Baru</h3>
+            <form id="addProductForm">
+                <div class="mb-3">
+                    <label for="namaProduk" class="form-label">Nama Produk</label>
+                    <input type="text" class="form-control" id="namaProduk" required>
+                </div>
+                <div class="mb-3">
+                    <label for="jenisProduk" class="form-label">Jenis Produk</label>
+                    <input type="text" class="form-control" id="jenisProduk" required>
+                </div>
+                <div class="mb-3">
+                    <label for="stokProduk" class="form-label">Stok</label>
+                    <input type="number" class="form-control" id="stokProduk" required>
+                </div>
+                <div class="mb-3">
+                    <label for="hargaBeli" class="form-label">Harga Beli</label>
+                    <input type="number" class="form-control" id="hargaBeli" required>
+                </div>
+                <div class="mb-3">
+                    <label for="hargaJual" class="form-label">Harga Jual</label>
+                    <input type="number" class="form-control" id="hargaJual" required>
+                </div>
+                <div class="mb-3">
+                    <label for="statusProduk" class="form-label">Status</label>
+                    <select class="form-control" id="statusProduk" required>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Non-Aktif">Non-Aktif</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success" id="submitBtn">Submit</button>
+                <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script JavaScript untuk Read dan Tampilan Form -->
+    <script>
+        // 1. Mengambil Data dari API (READ)
+        const url = 'https://api.roniprsty.com/produk/read.php';
+
+        async function getProducts() {
+            try {
+                let response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                let products = await response.json();
+                
+                let tableBody = document.querySelector('#product-table tbody');
+                tableBody.innerHTML = ''; // Kosongkan isi tabel
+                
+                products.forEach(product => {
+                    let row = `<tr>
+                        <td>${product.id}</td>
+                        <td>${product.nama_produk}</td>
+                        <td>${product.jenis_produk}</td>
+                        <td>${product.stok}</td>
+                        <td>Rp${product.harga_beli}</td>
+                        <td>Rp${product.harga_jual}</td>
+                        <td>${product.status}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Gagal mengambil data produk", error);
+                document.querySelector('#product-table tbody').innerHTML = `<tr><td colspan="7" class="text-center">Tidak dapat mengambil data produk.</td></tr>`;
+            }
+        }
+
+        // Panggil fungsi getProducts saat halaman dimuat
+        getProducts();
+
+        // 2. Menampilkan form untuk menambahkan produk baru (Event Listener Add Data)
+        document.getElementById('addDataBtn').addEventListener('click', function () {
+            document.getElementById('formContainer').style.display = 'block';
+        });
+
+        // 3. Menyembunyikan form saat tombol Cancel diklik
+        document.getElementById('cancelBtn').addEventListener('click', function () {
+            document.getElementById('formContainer').style.display = 'none';
+        });
+
+        // (Opsional/Lanjutan dari Modul) Script untuk submit formulir penambahan data
+        document.getElementById('addProductForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const newData = {
+                nama_produk: document.getElementById('namaProduk').value,
+                jenis_produk: document.getElementById('jenisProduk').value,
+                stok: document.getElementById('stokProduk').value,
+                harga_beli: document.getElementById('hargaBeli').value,
+                harga_jual: document.getElementById('hargaJual').value,
+                status: document.getElementById('statusProduk').value
+            };
+
+            try {
+                let response = await fetch('https://api.roniprsty.com/produk/create.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newData)
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                // Refresh data tabel dan sembunyikan form jika berhasil
+                getProducts();
+                document.getElementById('formContainer').style.display = 'none';
+                this.reset();
+                alert('Data produk berhasil ditambahkan!');
+            } catch (error) {
+                console.error("Gagal menambahkan data", error);
+                alert('Gagal menambahkan produk!');
+            }
+        });
+    </script>
+</body>
+</html>

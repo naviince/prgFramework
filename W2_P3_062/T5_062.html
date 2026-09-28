@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengubah Warna Latar Acak</title>
+</head>
+<body>
+
+    <h2>Tombol Pengubah Warna Latar Belakang</h2>
+    
+    <!-- Tombol yang memanggil fungsi ubahWarna() saat diklik -->
+    <button onclick="ubahWarna()">Ubah Warna Latar Acak</button>
+
+    <script>
+        function ubahWarna() {
+            // Menghasilkan nilai acak untuk Red, Green, dan Blue (0 - 255)
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            
+            // Menggabungkan nilai menjadi format 'rgb(r, g, b)'
+            const warnaAcak = `rgb(${r}, ${g}, ${b})`;
+            
+            // Menerapkan warna acak tersebut ke latar belakang halaman (body)
+            document.body.style.backgroundColor = warnaAcak;
+        }
+    </script>
+
+</body>
+</html>
