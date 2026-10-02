@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Sistem Informasi Akademik & Penilaian Mahasiswa">
+    <meta name="author" content="SIAKAD Team">
+
+    <title>SIAKAD - Master Data Program Studi</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom styles for DataTables -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">SIAKAD <sup>APP</sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Master Data
+            </div>
+
+            <!-- Nav Item - Master Data Prodi -->
+            <li class="nav-item active">
+                <a class="nav-link" href="prodi.html">
+                    <i class="fas fa-fw fa-university"></i>
+                    <span>Master Data Prodi</span></a>
+            </li>
+
+            <!-- Nav Item - Master Data Mahasiswa -->
+            <li class="nav-item">
+                <a class="nav-link" href="mahasiswa.html">
+                    <i class="fas fa-fw fa-user-graduate"></i>
+                    <span>Master Data Mahasiswa</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Transaksi
+            </div>
+
+            <!-- Nav Item - Transaksi Penilaian -->
+            <li class="nav-item">
+                <a class="nav-link" href="penilaian.html">
+                    <i class="fas fa-fw fa-calculator"></i>
+                    <span>Transaksi Penilaian</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small font-weight-bold">Dr. Dosen
+                                    Pengampuh, M.Kom</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="login.html"><i
+                                        class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">
+                            <i class="fas fa-university text-primary mr-2"></i>Master Data Program Studi
+                        </h1>
+                        <button class="btn btn-primary shadow-sm font-weight-bold" data-toggle="modal"
+                            data-target="#prodiModal">
+                            <i class="fas fa-plus-circle fa-sm mr-1"></i> Tambah Prodi Baru
+                        </button>
+                    </div>
+
+                    <!-- Data Table Card -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Daftar Program Studi / Jurusan</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" id="dataTable" width="100%"
+                                    cellspacing="0">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kode Prodi</th>
+                                            <th>Nama Program Studi</th>
+                                            <th>Jenjang</th>
+                                            <th>Ketua Program Studi (Kaprodi)</th>
+                                            <th>Akreditasi</th>
+                                            <th>Mahasiswa Aktif</th>
+                                            <th class="text-center" style="width: 110px;">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><span
+                                                    class="badge badge-light border font-weight-bold text-primary">PR001</span>
+                                            </td>
+                                            <td class="font-weight-bold text-dark">Teknik Informatika</td>
+                                            <td><span class="badge badge-info p-1 px-2">S1</span></td>
+                                            <td>Dr. Budi Santoso, M.Kom</td>
+                                            <td><span class="badge badge-success p-1 px-2">Unggul</span></td>
+                                            <td><span class="font-weight-bold">120</span> Mahasiswa</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-info mr-1" data-toggle="modal"
+                                                    data-target="#prodiModal" title="Edit"><i
+                                                        class="fas fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-danger"
+                                                    onclick="alert('Data berhasil dihapus!')" title="Hapus"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td><span
+                                                    class="badge badge-light border font-weight-bold text-primary">PR002</span>
+                                            </td>
+                                            <td class="font-weight-bold text-dark">Sistem Informasi</td>
+                                            <td><span class="badge badge-info p-1 px-2">S1</span></td>
+                                            <td>Siti Aminah, M.T.</td>
+                                            <td><span class="badge badge-primary p-1 px-2">Baik Sekali</span></td>
+                                            <td><span class="font-weight-bold">95</span> Mahasiswa</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-info mr-1" data-toggle="modal"
+                                                    data-target="#prodiModal" title="Edit"><i
+                                                        class="fas fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-danger"
+                                                    onclick="alert('Data berhasil dihapus!')" title="Hapus"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td><span
+                                                    class="badge badge-light border font-weight-bold text-primary">PR003</span>
+                                            </td>
+                                            <td class="font-weight-bold text-dark">Teknologi Informasi</td>
+                                            <td><span class="badge badge-secondary p-1 px-2">D3</span></td>
+                                            <td>Ahmad Dahlan, M.Sc</td>
+                                            <td><span class="badge badge-primary p-1 px-2">Baik</span></td>
+                                            <td><span class="font-weight-bold">60</span> Mahasiswa</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-info mr-1" data-toggle="modal"
+                                                    data-target="#prodiModal" title="Edit"><i
+                                                        class="fas fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-danger"
+                                                    onclick="alert('Data berhasil dihapus!')" title="Hapus"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td><span
+                                                    class="badge badge-light border font-weight-bold text-primary">PR004</span>
+                                            </td>
+                                            <td class="font-weight-bold text-dark">Sains Data</td>
+                                            <td><span class="badge badge-info p-1 px-2">S1</span></td>
+                                            <td>Dr. Retno Wulandari, M.Si</td>
+                                            <td><span class="badge badge-success p-1 px-2">Unggul</span></td>
+                                            <td><span class="font-weight-bold">45</span> Mahasiswa</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-info mr-1" data-toggle="modal"
+                                                    data-target="#prodiModal" title="Edit"><i
+                                                        class="fas fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-danger"
+                                                    onclick="alert('Data berhasil dihapus!')" title="Hapus"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>SIAKAD &copy; Master Data Program Studi 2026</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- MODAL TAMBAH / EDIT PRODI -->
+    <div class="modal fade" id="prodiModal" tabindex="-1" role="dialog" aria-labelledby="prodiModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title font-weight-bold" id="prodiModalLabel">Form Program Studi</h5>
+                    <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form
+                    onsubmit="event.preventDefault(); alert('Data Program Studi berhasil disimpan!'); $('#prodiModal').modal('hide');">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label class="font-weight-bold text-dark">Kode Prodi</label>
+                                <input type="text" class="form-control" placeholder="Contoh: PR001" required>
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <label class="font-weight-bold text-dark">Nama Program Studi</label>
+                                <input type="text" class="form-control" placeholder="Contoh: Teknik Informatika"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label class="font-weight-bold text-dark">Jenjang Studi</label>
+                                <select class="form-control" required>
+                                    <option value="D3">D3 - Diploma Tiga</option>
+                                    <option value="D4">D4 - Sarjana Terapan</option>
+                                    <option value="S1" selected>S1 - Sarjana</option>
+                                    <option value="S2">S2 - Magister</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5 form-group">
+                                <label class="font-weight-bold text-dark">Ketua Program Studi (Kaprodi)</label>
+                                <input type="text" class="form-control" placeholder="Nama & Gelar Dosen" required>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class="font-weight-bold text-dark">Akreditasi</label>
+                                <select class="form-control" required>
+                                    <option value="Unggul">Unggul</option>
+                                    <option value="Baik Sekali">Baik Sekali</option>
+                                    <option value="Baik">Baik</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                        <button class="btn btn-primary font-weight-bold" type="submit"><i class="fas fa-save mr-1"></i>
+                            Simpan Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins (DataTables) -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+
+</body>
+
+</html>
