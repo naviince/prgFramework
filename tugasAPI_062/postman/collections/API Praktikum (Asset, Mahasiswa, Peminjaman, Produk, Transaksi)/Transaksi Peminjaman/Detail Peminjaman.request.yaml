@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/peminjaman/detail.php?id_peminjaman=1"
+method: GET
+queryParams:
+  id_peminjaman: "1"
+order: 2000

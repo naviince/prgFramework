@@ -1,0 +1,4 @@
+$kind: collection
+description: Postman collection untuk API Master Asset, Master Mahasiswa, Master Produk, Transaksi Peminjaman, dan Transaksi Penjualan.
+variables:
+  base_url: https://api.melangkah.my.id

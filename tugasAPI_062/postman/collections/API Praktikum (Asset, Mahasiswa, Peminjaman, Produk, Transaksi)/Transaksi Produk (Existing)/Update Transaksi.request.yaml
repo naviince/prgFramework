@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{base_url}}/transaksi/update.php"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "id_transaksi": 1,
+      "status_transaksi": "Selesai"
+    }
+order: 3000

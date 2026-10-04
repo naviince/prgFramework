@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/peminjaman/update.php"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "id_peminjaman": 1,
+      "status_peminjaman": "Dikembalikan",
+      "tanggal_kembali": "2026-10-04",
+      "keterangan": "Dikembalikan dalam kondisi baik"
+    }
+order: 4000

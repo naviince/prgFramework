@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/mahasiswa/create.php"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nim": "210101003",
+      "nama": "Budi Santoso",
+      "jurusan": "Teknik Komputer",
+      "angkatan": 2022,
+      "email": "budi.santoso@example.com",
+      "telepon": "083456789012"
+    }
+order: 3000

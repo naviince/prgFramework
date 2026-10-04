@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{base_url}}/asset/update.php"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "id": 1,
+      "nama_asset": "Proyektor Epson EB-X400 (Updated)",
+      "kategori": "Elektronik",
+      "jumlah": 5,
+      "kondisi": "Baik",
+      "lokasi": "Lab Komputer 1",
+      "status": "Tersedia"
+    }
+order: 4000

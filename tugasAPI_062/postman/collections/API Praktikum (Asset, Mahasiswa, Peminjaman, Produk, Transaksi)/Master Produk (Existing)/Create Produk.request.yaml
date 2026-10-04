@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/produk/create.php"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nama_produk": "Kopi Hitam",
+      "jenis_produk": "Minuman",
+      "stok": 50,
+      "harga_beli": 5000,
+      "harga_jual": 10000,
+      "status": "Tersedia"
+    }
+order: 3000

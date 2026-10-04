@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/produk/delete.php?id=1"
+method: DELETE
+queryParams:
+  id: "1"
+order: 5000

@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/asset/create.php"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nama_asset": "Laptop Asus ROG",
+      "kategori": "Elektronik",
+      "jumlah": 3,
+      "kondisi": "Baik",
+      "lokasi": "Lab Komputer 2",
+      "status": "Tersedia"
+    }
+order: 3000

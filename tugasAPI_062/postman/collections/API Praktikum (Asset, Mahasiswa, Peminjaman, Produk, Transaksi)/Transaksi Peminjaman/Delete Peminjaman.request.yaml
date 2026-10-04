@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/peminjaman/delete.php?id_peminjaman=2"
+method: DELETE
+queryParams:
+  id_peminjaman: "2"
+order: 5000

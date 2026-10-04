@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{base_url}}/produk/update.php"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "id": 1,
+      "nama_produk": "Kopi Hitam Robusta",
+      "jenis_produk": "Minuman",
+      "stok": 45,
+      "harga_beli": 5000,
+      "harga_jual": 12000,
+      "status": "Tersedia"
+    }
+order: 4000
