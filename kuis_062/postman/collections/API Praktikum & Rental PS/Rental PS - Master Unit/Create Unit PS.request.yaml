@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/unit/create.php"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nama_unit": "PS5 - Room VIP 2",
+      "tipe_ps": "PS5",
+      "harga_per_jam": 25000,
+      "status": "Tersedia"
+    }
+order: 3000

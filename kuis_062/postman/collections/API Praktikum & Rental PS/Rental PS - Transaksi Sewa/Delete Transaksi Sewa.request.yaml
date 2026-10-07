@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{base_url}}/transaksi_sewa/delete.php"
+method: DELETE
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "id_transaksi": 1
+    }
+order: 5000

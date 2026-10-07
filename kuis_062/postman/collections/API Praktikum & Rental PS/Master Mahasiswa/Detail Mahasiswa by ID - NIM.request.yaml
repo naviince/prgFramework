@@ -1,0 +1,7 @@
+$kind: http-request
+name: Detail Mahasiswa by ID / NIM
+url: "{{base_url}}/mahasiswa/detail.php?id=1"
+method: GET
+queryParams:
+  id: "1"
+order: 2000

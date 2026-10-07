@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{base_url}}/unit/delete.php"
+method: DELETE
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "id_unit": 4
+    }
+order: 5000

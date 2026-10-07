@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{base_url}}/transaksi_sewa/read.php"
+method: GET
+order: 1000

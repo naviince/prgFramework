@@ -1,0 +1,14 @@
+$kind: http-request
+name: Update Transaksi Sewa (Selesai/Batal)
+url: "{{base_url}}/transaksi_sewa/update.php"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "id_transaksi": 1,
+      "status_transaksi": "Selesai"
+    }
+order: 4000
